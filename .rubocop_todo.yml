@@ -111,4 +111,8 @@ Style/SymbolArray:
 
 Style/NumericLiterals:
   Exclude:
-    - 'db'
+    - 'db/**/*'
+
+Metrics/BlockLength:
+  Exclude:
+    - 'spec/**/*'
