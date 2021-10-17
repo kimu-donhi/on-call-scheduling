@@ -3,8 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe OnCallPeriod, type: :model do
-  let(:params) { { number: number, start_date: start_date, end_date: end_date } }
-  let(:number) { 1 }
+  let(:params) { { start_date: start_date, end_date: end_date } }
   let(:end_date) { Time.current.beginning_of_day }
   let(:start_date) { end_date - 4.weeks }
 
@@ -29,28 +28,6 @@ RSpec.describe OnCallPeriod, type: :model do
       end
     end
 
-    context 'without a number' do
-      let(:number) { nil }
-
-      it_behaves_like 'it is invalid'
-    end
-
-    context 'the number is not integer' do
-      let(:number) { 'number' }
-
-      it_behaves_like 'it is invalid'
-    end
-
-    context 'the number already exists' do
-      before do
-        create(:on_call_period, number: 1,
-                                start_date: start_date,
-                                end_date: end_date)
-      end
-
-      it_behaves_like 'it is invalid'
-    end
-
     context 'without a start date' do
       let(:start_date) { nil }
 
@@ -72,7 +49,7 @@ RSpec.describe OnCallPeriod, type: :model do
 
   describe 'association' do
     let(:member) { create(:member) }
-    let(:on_call_period) { create(:on_call_period, number: 1, start_date: 1.month.ago, end_date: Time.current) }
+    let(:on_call_period) { create(:on_call_period, start_date: 1.month.ago, end_date: Time.current) }
     let(:on_call_units) do
       [create_list(:on_call_unit, 2, start_date: 1.month.ago, end_date: 1.month.ago.tomorrow,
                                      member: member, on_call_period: on_call_period)]

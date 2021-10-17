@@ -6,8 +6,7 @@ RSpec.describe OnCallUnit, type: :model do
   let(:members) { create_list(:member, 4) }
   let(:beginning_of_today) { Time.current.beginning_of_day }
   let(:on_call_period) do
-    create(:on_call_period, number: 1,
-                            start_date: (beginning_of_today - 4.weeks),
+    create(:on_call_period, start_date: (beginning_of_today - 4.weeks),
                             end_date: beginning_of_today)
   end
   let(:start_date) { beginning_of_today - 1.week }

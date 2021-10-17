@@ -38,7 +38,7 @@ RSpec.describe Member, type: :model do
 
   describe 'association' do
     let(:member) { create(:member) }
-    let(:on_call_period) { create(:on_call_period, number: 1, start_date: 1.month.ago, end_date: Time.current) }
+    let(:on_call_period) { create(:on_call_period, start_date: 1.month.ago, end_date: Time.current) }
     let(:on_call_units) do
       [create_list(:on_call_unit, 2, start_date: 1.month.ago, end_date: 1.month.ago.tomorrow,
                                      member: member, on_call_period: on_call_period)]
