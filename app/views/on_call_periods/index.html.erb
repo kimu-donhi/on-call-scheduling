@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>On-call scheduling</title>
+  </head>
+  <body>
+    <header>
+      <h2>On-call scheduling</h2>
+    </header>
+    <section>
+      <p>
+        <% if @current_on_call_member.present? %>
+          Today's on-call member is <%= @current_on_call_member.name %>.
+        <% else %>
+          There is no on-call member now.
+        <% end %>
+      </p>
+    </section>
+    <footer>
+      <p>The time is now: <%= Time.now.to_time %>
+    </footer>
+  </body>
+</html>
