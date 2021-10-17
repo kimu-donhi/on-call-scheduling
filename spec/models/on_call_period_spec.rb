@@ -8,17 +8,15 @@ RSpec.describe OnCallPeriod, type: :model do
   let(:end_date) { Time.current.beginning_of_day }
   let(:start_date) { end_date - 4.weeks }
 
-  describe '.new' do
-    subject(:on_call_period) { described_class.new(params) }
+  subject(:on_call_period) { described_class.new(params) }
 
+  describe '.new' do
     it 'creates a new instance' do
       expect(on_call_period).to be_instance_of described_class
     end
   end
 
   describe '#valid' do
-    subject(:on_call_period) { described_class.new(params) }
-
     shared_examples 'it is invalid' do
       it 'is not valid' do
         expect(on_call_period).not_to be_valid
