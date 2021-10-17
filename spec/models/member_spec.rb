@@ -38,14 +38,16 @@ RSpec.describe Member, type: :model do
 
   describe 'association' do
     let(:member) { create(:member) }
-    let(:period) { create(:on_call_period, number: 1, start_date: 1.month.ago, end_date: Time.current) }
-    let(:unit) do
-      [create(:on_call_unit, start_date: 1.month.ago, end_date: 1.month.ago.tomorrow,
-                             member: member, on_call_period: period)]
+    let(:on_call_period) { create(:on_call_period, number: 1, start_date: 1.month.ago, end_date: Time.current) }
+    let(:on_call_units) do
+      [create_list(:on_call_unit, 2, start_date: 1.month.ago, end_date: 1.month.ago.tomorrow,
+                                     member: member, on_call_period: on_call_period)]
     end
 
     it 'has on call units' do
-      expect(member.on_call_units).to eq unit
+      member.on_call_units.each.with_index do |unit, i|
+        expect(unit).to eq on_call_units[i]
+      end
     end
   end
 end

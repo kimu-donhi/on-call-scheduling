@@ -1,5 +1,5 @@
 FactoryBot.define do
   factory :member, class: Member do
-    name { 'Alice Bob' }
+    sequence(:name) { |n| "Alice Bob#{n}" }
   end
 end
