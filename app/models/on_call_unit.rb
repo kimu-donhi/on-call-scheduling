@@ -4,4 +4,6 @@ class OnCallUnit < ApplicationRecord
 
   belongs_to :member
   belongs_to :on_call_period
+
+  validates_with DateValidator
 end

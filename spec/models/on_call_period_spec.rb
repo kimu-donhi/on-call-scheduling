@@ -80,7 +80,7 @@ RSpec.describe OnCallPeriod, type: :model do
 
     it 'has may on call units' do
       on_call_period.on_call_units.each.with_index do |unit, i|
-        expect(unit).to be eq(on_call_units[i])
+        expect(unit).to eq(on_call_units[i])
       end
     end
   end
