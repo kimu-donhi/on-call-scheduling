@@ -44,7 +44,7 @@ RSpec.describe Member, type: :model do
                                      member: member, on_call_period: on_call_period)]
     end
 
-    it 'has on call units' do
+    it 'has many on call units' do
       member.on_call_units.each.with_index do |unit, i|
         expect(unit).to eq on_call_units[i]
       end
