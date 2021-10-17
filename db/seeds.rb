@@ -5,3 +5,16 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
+
+['Sanah Wills',
+ 'Alaw Calvert',
+ 'Hari Ashley',
+ 'Kira Hawes',
+ 'Biily Dawe',
+ 'Devin Senior',
+ 'Rizwan Shaw',
+ 'Finn Arias',
+ 'Zavier Henson',
+ 'Bodhi Goodwin'].each do |name|
+   Member.create(name: name)
+ end
