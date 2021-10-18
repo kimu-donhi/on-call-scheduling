@@ -20,7 +20,7 @@ class OnCallUnitsController < ApplicationController
       @target_unit.save!
     end
 
-    flash[:notice] = 'Schedule swapped successfully.'
+    flash[:success] = 'Schedule swapped successfully.'
     redirect_to root_path
   rescue StandardError => e
     Rails.logger.error e
@@ -35,11 +35,11 @@ class OnCallUnitsController < ApplicationController
   end
 
   def update_params
-    params.permit(:target_unit_id, :selected_unit_id)
+    params.permit(:id, :selected_unit_id)
   end
 
   def init_units
-    @target_unit = OnCallUnit.find(update_params[:target_unit_id])
+    @target_unit = OnCallUnit.find(update_params[:id])
     @selected_unit = OnCallUnit.find(update_params[:selected_unit_id])
   end
 end
