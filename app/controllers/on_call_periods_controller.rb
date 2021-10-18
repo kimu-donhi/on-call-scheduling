@@ -2,18 +2,13 @@
 
 class OnCallPeriodsController < ApplicationController
   def index
-    current_on_call_member
-  end
-
-  def new
     @on_call_period = OnCallPeriod.new
+    current_on_call_member
+    on_call_schedules
   end
 
-  def create # rubocop:disable Metrics/AbcSize
-    
-    return redirect_to new_on_call_period if period_params[:start_date].nil?
-
-    start_date = period_params[:start_date].to_date.beginning_of_day
+  def create # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
+    start_date = new_period_start_date
     end_date = (start_date + members.count.weeks) - 1.day
 
     ActiveRecord::Base.transaction do
@@ -26,6 +21,7 @@ class OnCallPeriodsController < ApplicationController
       end
     end
 
+    flash[:notice] = 'New schedule created successfully.'
     redirect_to root_path
   end
 
@@ -36,11 +32,30 @@ class OnCallPeriodsController < ApplicationController
     @current_on_call_member ||= OnCallUnit.find_by('start_date < ? AND end_date > ?', time_now, time_now)&.member
   end
 
+  def on_call_schedules
+    @schedules = OnCallUnit.where('start_date >= ? AND start_date <= ?',
+                                  search_date.beginning_of_month,
+                                  search_date.end_of_month).order(start_date: :asc)
+  end
+
+  def search_params
+    params.permit(:search_date)
+  end
+
+  def search_date
+    year = search_params.present? ? search_params['search_date(1i)'].to_i : Time.now.year
+    month = search_params.present? ? search_params['search_date(2i)'].to_i : Time.now.month
+
+    DateTime.new(year, month, 1)
+  end
+
   def members
     @members ||= Member.all
   end
 
-  def period_params
-    params.require(:on_call_period).permit(:start_date)
+  def new_period_start_date
+    return Time.today.beginning_of_day if OnCallPeriod.count.zero?
+
+    (OnCallPeriod.last.end_date.to_date + 1.day).beginning_of_day
   end
 end
