@@ -25,7 +25,7 @@ class OnCallUnitsController < ApplicationController
   rescue StandardError => e
     Rails.logger.error e
     flash[:error] = 'Invalid parameters passed.'
-    redirect_back(fallback_location: root_path)
+    redirect_back(fallback_location: edit_on_call_unit_path(update_params[:id]))
   end
 
   private
