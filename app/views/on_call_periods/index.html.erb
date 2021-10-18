@@ -5,6 +5,9 @@
   </head>
   <body>
     <header>
+      <div>
+        <a href='<%= root_path %>'>HOME</a>
+      </div>
       <% if flash.present? %>
         <div>
         <% flash.each do |key, value| %>
@@ -15,11 +18,6 @@
       <h2>On-call scheduling</h2>
     </header>
     <section>
-      <div>
-      <%= form_for @on_call_period, url: {action: 'create'} do |form| %>
-        <%= form.submit "Create new schedule" %>
-      <% end %>
-      </div>
       <p>
         <% if @current_on_call_member.present? %>
           <b><%= @current_on_call_member.name %></b> is Today's on-call.
@@ -30,36 +28,44 @@
       <div>
         <h3>On-call schedule</h3>
         <div>
-        <%= form_with url: root_path, method: :get do |form| %>
-          <%= form.date_select :search_date,
-              discard_day: true,
-              default: @schedules.first.start_date %>
-          <%= form.submit "Search schedule" %>
-        <% end %>
-      </div>
-      <div>
         <% if @schedules.present? %>
-        <table>
-          <thead>
-            <th>name</th>
-            <th>term</th>
-          </thead>
-          <tbody>
-            <% @schedules.each do |schedule| %>
-            <tr>
-              <td><%= schedule.member.name %></td>
-              <td><%= schedule.start_date.to_date %> ~ <%= schedule.end_date.to_date %></td>
-            </tr>
-            <% end %>
-          </tbody>
-        </table>
+          <%= form_with url: root_path, method: :get do |form| %>
+            <%= form.date_select :search_date,
+                discard_day: true,
+                default: @schedules.first.start_date %>
+            <%= form.submit "Search schedule" %>
+          <% end %>
+          <table>
+            <thead>
+              <th>period ID</th>
+              <th>unit ID</th>
+              <th>name</th>
+              <th>term</th>
+            </thead>
+            <tbody>
+              <% @schedules.each do |schedule| %>
+              <tr>
+                <td><%= schedule.on_call_period.id %></td>
+                <td><a href='<%= edit_on_call_unit_path(schedule.id) %>'><%= schedule.id %></a></td>
+                <td><%= schedule.member.name %></td>
+                <td><%= schedule.to_date %></td>
+              </tr>
+              <% end %>
+            </tbody>
+          </table>
         <% else %>
-          <p>There is no on-call schedule.</p>
+          <p>Please crate a new schedule.</p>
         <% end %>
+          <div>
+            <%= form_for @on_call_period, url: {action: 'create'} do |form| %>
+              <%= form.submit "Create schedule" %>
+            <% end %>
+          </div>
+        </div>
       </div>
     </section>
     <footer>
-      <p>The time is now: <%= Time.now.to_time %>
+      <p>The time is now: <%= Time.now.strftime('%H:%M:%S %a, %d %b %Y') %>
     </footer>
   </body>
 </html>

@@ -6,4 +6,8 @@ class OnCallUnit < ApplicationRecord
   belongs_to :on_call_period
 
   validates_with DateValidator
+
+  def to_date
+    "#{start_date.strftime('%a, %d %b %Y')} ~ #{end_date.strftime('%a, %d %b %Y')}"
+  end
 end

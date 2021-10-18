@@ -19,9 +19,10 @@ class OnCallPeriodsController < ApplicationController
         OnCallUnit.create(on_call_period: period, member: member, start_date: start_date.to_s, end_date: end_date.to_s)
         start_date += 1.week
       end
+
+      flash[:notice] = "Period #{period.id}(#{period.to_date}) created successfully."
     end
 
-    flash[:notice] = 'New schedule created successfully.'
     redirect_to root_path
   end
 
@@ -54,7 +55,7 @@ class OnCallPeriodsController < ApplicationController
   end
 
   def new_period_start_date
-    return Time.today.beginning_of_day if OnCallPeriod.count.zero?
+    return Time.current.beginning_of_day if OnCallPeriod.count.zero?
 
     (OnCallPeriod.last.end_date.to_date + 1.day).beginning_of_day
   end

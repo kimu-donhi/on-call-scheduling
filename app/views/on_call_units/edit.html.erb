@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Swap schedule</title>
+  </head>
+  <body>
+    <header>
+      <div>
+        <a href='<%= root_path %>'>HOME</a>
+      </div>
+      <% if flash.present? %>
+        <div>
+        <% flash.each do |key, value| %>
+        <p><%= value %></p>
+        <% end %>
+        </div>
+      <% end %>
+      <h2>Swap schedule</h2>
+      <p>Only schedules within the same period can be swapped.</p>
+    </header>
+    <section>
+      <div>
+        <h3>Target on call</h3>
+        <table>
+          <thead>
+            <th>name</th>
+            <th>term</th>
+          </thead>
+          <tbody>
+            <tr>
+              <td><%= @unit.member.name %></td>
+              <td><%= @unit.to_date %></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div>
+        <h3>Select a schedule to swap. </h3>
+        <%= form_with url: on_call_unit_path(@unit.id), method: :patch do |form| %>
+          <%= form.hidden_field :target_unit_id, value: @unit.id %>
+          <%= form.collection_select :selected_unit_id, @other_units, :id, ->(unit) { "#{unit.member.name}, #{unit.to_date}" } %>
+          <%= form.submit "Swap schedule" %>
+        <% end %>
+      </div>
+    </section>
+    <footer>
+      <p>The time is now: <%= Time.now.strftime('%H:%M:%S %a, %d %b %Y') %>
+    </footer>
+  </body>
+</html>
