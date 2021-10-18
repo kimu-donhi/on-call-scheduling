@@ -20,10 +20,14 @@ class OnCallPeriodsController < ApplicationController
         start_date += 1.week
       end
 
-      flash[:notice] = "Period #{period.id}(#{period.to_date}) created successfully."
+      flash[:success] = "Period #{period.id}(#{period.to_date}) created successfully."
     end
 
     redirect_to root_path
+  rescue StandardError => e
+    Rails.logger.error e
+    flash[:error] = 'Unexpected error occurred. Please try again.'
+    redirect_back(fallback_location: root_path)
   end
 
   private

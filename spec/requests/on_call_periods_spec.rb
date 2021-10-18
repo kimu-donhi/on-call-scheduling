@@ -41,6 +41,11 @@ RSpec.describe 'OnCallPeriods', type: :request do
         period = OnCallPeriod.first
         expect(period.end_date).to eq (period.start_date + members.count.weeks) - 1.day
       end
+
+      it 'has success message' do
+        create
+        expect(flash[:success]).to be_truthy
+      end
     end
 
     it 'is redirected to root_path' do
