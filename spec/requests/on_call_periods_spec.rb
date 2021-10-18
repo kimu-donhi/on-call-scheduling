@@ -8,7 +8,7 @@ RSpec.describe 'OnCallPeriods', type: :request do
   describe 'GET #index' do
     subject(:index) { get root_path }
 
-    it 'renders the edit template' do
+    it 'renders the index page' do
       index
       expect(response).to render_template(:index)
     end
@@ -16,6 +16,11 @@ RSpec.describe 'OnCallPeriods', type: :request do
     it 'returns a 200 OK http status' do
       index
       expect(response).to have_http_status(:success)
+    end
+
+    it 'shows page title' do
+      index
+      expect(response.body).to include 'On-call scheduling'
     end
   end
 
