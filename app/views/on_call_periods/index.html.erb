@@ -1,5 +1,6 @@
 <%= render partial: "layouts/header" %>
 <div class="container w-full">
+<% if @schedules.present? %>
   <div class="relative bg-white">
     <div class="max-w-7xl mx-auto px-4 sm:px-6">
       <div class="flex justify-between items-center py-6 md:justify-start md:space-x-10">
@@ -31,12 +32,13 @@
     <div class="relative bg-white">
       <div class="max-w-7xl mx-auto px-4 sm:px-6">
         <div class="flex justify-between items-center py-6 md:justify-start md:space-x-10">
-          <span class="text-gray-500">The last on-call date is <%= @last_on_call_date.strftime('%a, %d %B %Y') %>.</span>
+          <span class="text-gray-500">
+              The last on-call date is <%= @last_on_call_date.strftime('%a, %d %B %Y') %>.
+          </span>
         </div>
       </div>
     </div>
   </div>
-<% if @schedules.present? %>
   <div class="flex flex-col">
     <div class="relative bg-white">
       <div class="max-w-7xl mx-auto px-4 sm:px-6">
@@ -89,7 +91,7 @@
   <div class="flex flex-col">
       <div class="relative bg-white">
         <div class="max-w-7xl mx-auto px-4 sm:px-6">
-          <div class="flex justify-between items-center pb-6 md:justify-start md:space-x-10">
+          <div class="flex justify-between items-center py-6 md:justify-start md:space-x-10">
             <span>There is no schedule.</span>
           </div>
         </div>
