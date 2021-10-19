@@ -20,7 +20,7 @@ RSpec.describe 'OnCallPeriods', type: :request do
 
     it 'shows page title' do
       index
-      expect(response.body).to include 'On-call scheduling'
+      expect(response.body).to include 'On-call Scheduling'
     end
   end
 

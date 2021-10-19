@@ -34,7 +34,7 @@ RSpec.describe 'OnCallUnits', type: :request do
 
     it 'shows page title' do
       edit
-      expect(response.body).to include 'Swap schedule'
+      expect(response.body).to include 'Select on-call schedule to swap'
     end
   end
 

@@ -3,8 +3,8 @@
 class OnCallPeriodsController < ApplicationController
   def index
     @on_call_period = OnCallPeriod.new
-    @first_on_call_date ||= OnCallPeriod.first.start_date
-    @last_on_call_date ||= OnCallPeriod.last.end_date
+    @first_on_call_date ||= OnCallPeriod.first&.start_date
+    @last_on_call_date ||= OnCallPeriod.last&.end_date
     current_on_call_member
     search_date
     on_call_schedules
