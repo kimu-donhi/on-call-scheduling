@@ -1,42 +1,71 @@
-
-<header>
+<%= render partial: "layouts/header" %>
+<div class="container w-full">
   <div>
-    <a href='<%= root_path %>'>HOME</a>
-  </div>
-  <% if flash.present? %>
-    <div>
-    <% flash.each do |key, value| %>
-    <p><%= value %></p>
-    <% end %>
+    <div class="relative bg-white">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6">
+        <div class="flex justify-between items-center py-6 md:justify-start md:space-x-10">
+          <span>Target on-call schedule</span>
+        </div>
+      </div>
     </div>
-  <% end %>
-  <h2>Swap schedule</h2>
-  <p>Only schedules within the same period can be swapped.</p>
-</header>
-<section>
-  <div>
-    <h3>Target on call</h3>
-    <table>
-      <thead>
-        <th>name</th>
-        <th>term</th>
-      </thead>
-      <tbody>
-        <tr>
-          <td><%= @unit.member.name %></td>
-          <td><%= @unit.to_date %></td>
-        </tr>
-      </tbody>
-    </table>
+    <div class="flex flex-col">
+      <div class="relative bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6">
+          <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
+            <div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
+              <div class="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
+                <table class="min-w-full divide-y divide-gray-200">
+                  <thead class="bg-gray-50">
+                    <tr>
+                      <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                        Name
+                      </th>
+                      <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                        Start Date
+                      </th>
+                      <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                        End Date
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody class="bg-white divide-y divide-gray-200">
+                    <tr>
+                      <td class="px-6 py-4 whitespace-nowrap">
+                        <div class="text-sm font-medium text-gray-900"><%= @unit.member.name %></div>
+                      </td>
+                      <td class="px-6 py-4 whitespace-nowrap">
+                        <div class="text-sm text-gray-900"><%= @unit.start_date.strftime('%a, %d %b %Y') %></div>
+                      </td>
+                      <td class="px-6 py-4 whitespace-nowrap">
+                        <div class="text-sm text-gray-900"><%= @unit.end_date.strftime('%a, %d %b %Y') %></div>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
   <div>
-    <h3>Select a schedule to swap. </h3>
-    <%= form_with url: on_call_unit_path(@unit.id), method: :patch do |form| %>
-      <%= form.collection_select :selected_unit_id, @other_units, :id, ->(unit) { "#{unit.member.name}, #{unit.to_date}" } %>
-      <%= form.submit "Swap schedule" %>
-    <% end %>
+    <div class="relative bg-white">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6">
+        <div class="flex justify-between items-center py-6 md:justify-start md:space-x-10">
+          <span>Select on-call schedule to swap</span>
+        </div>
+      </div>
+    </div>
+    <div class="relative bg-white">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6">
+        <div class="flex justify-between items-center py-6 md:justify-start md:space-x-10">
+          <%= form_with url: on_call_unit_path(@unit.id), method: :patch do |form| %>
+            <%= form.collection_select :selected_unit_id, @other_units, :id, ->(unit) { "#{unit.member.name}, #{unit.to_date}" } %>
+            <%= form.button "Swap", type: :submit, class: 'bg-transparent hover:bg-indigo-600 text-indigo-700 font-semibold hover:text-white py-2 px-4 border border-indigo-600 hover:border-transparent rounded' %>
+          <% end %>
+        </div>
+      </div>
+    </div>
   </div>
-</section>
-<footer>
-  <p>The time is now: <%= Time.now.strftime('%H:%M:%S %a, %d %b %Y') %>
-</footer>
+</div>
