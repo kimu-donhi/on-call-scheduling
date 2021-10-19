@@ -1,57 +1,114 @@
-<header>
-  <div>
-    <a href='<%= root_path %>'>HOME</a>
-  </div>
-  <% if flash.present? %>
-    <div>
-    <% flash.each do |key, value| %>
-    <p><%= value %></p>
-    <% end %>
-    </div>
-  <% end %>
-  <h2>On-call scheduling</h2>
-</header>
-<section>
-  <p>
-    <% if @current_on_call_member.present? %>
-      <b><%= @current_on_call_member.name %></b> is Today's on-call.
-    <% else %>
-      There is no on-call today.
-    <% end %>
-  </p>
-  <div>
-    <h3>On-call schedule</h3>
-    <div>
-    <% if @schedules.present? %>
-      <%= form_with url: root_path, method: :get do |form| %>
-        <%= form.date_select :search_date,
-            discard_day: true,
-            default: @schedules.first.start_date %>
-        <%= form.submit "Search schedule" %>
-      <% end %>
-      <table>
-        <thead>
-          <th><%= @schedules.first.start_date.strftime('%B, %Y') %></th>
-        </thead>
-        <tbody>
-          <% @schedules.each do |schedule| %>
-          <tr>
-            <td><a href='<%= edit_on_call_unit_path(schedule.id) %>'><%= schedule.member.name %>, <%= schedule.to_date %></a></td>
-          </tr>
+<%= render partial: "layouts/header" %>
+<div class="container w-full">
+  <div class="relative bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6">
+      <div class="flex justify-between items-center py-6 md:justify-start md:space-x-10">
+        <span>
+          <% if @current_on_call_member.present? %>
+            <b><%= @current_on_call_member.name %></b> is Today's on-call.
+          <% else %>
+            There is no on-call today.
           <% end %>
-        </tbody>
-      </table>
-    <% else %>
-      <p>Please crate a new schedule.</p>
-    <% end %>
-      <div>
-        <%= form_for @on_call_period, url: {action: 'create'} do |form| %>
-          <%= form.submit "Create schedule" %>
-        <% end %>
+        </span>
       </div>
     </div>
   </div>
-</section>
-<footer>
-  <p>The time is now: <%= Time.now.strftime('%H:%M:%S %a, %d %b %Y') %>
-</footer>
+    <div class="flex flex-col">
+      <div class="relative bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6">
+          <div class="flex justify-between items-center md:justify-start md:space-x-10">
+            <%= form_with url: root_path, method: :get do |form| %>
+              <%= form.date_select :search_date,
+                  discard_day: true,
+                  start_year: @first_on_call_date.year,
+                  end_year: @last_on_call_date.year,
+                  default: @search_date %>
+              <%= form.button "Search schedule", type: :submit, class: 'bg-transparent hover:bg-indigo-600 text-indigo-700 font-semibold hover:text-white py-2 px-4 border border-indigo-600 hover:border-transparent rounded' %>
+            <% end %>
+          </div>
+        </div>
+      </div>
+      <div class="relative bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6">
+          <div class="flex justify-between items-center py-6 md:justify-start md:space-x-10">
+            <span class="text-gray-500">The last on-call date is <%= @last_on_call_date.strftime('%a, %d %b %Y') %>.</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  <% if @schedules.present? %>
+    <div class="flex flex-col">
+      <div class="relative bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6">
+          <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
+            <div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
+              <div class="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
+                <table class="min-w-full divide-y divide-gray-200">
+                  <thead class="bg-gray-50">
+                    <tr>
+                      <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                        Name
+                      </th>
+                      <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                        Start Date
+                      </th>
+                      <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                        End Date
+                      </th>
+                      <th scope="col" class="relative px-6 py-3">
+                        <span class="sr-only">Swap</span>
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody class="bg-white divide-y divide-gray-200">
+                    <% @schedules.each do |schedule| %>
+                      <tr>
+                        <td class="px-6 py-4 whitespace-nowrap">
+                          <div class="text-sm font-medium text-gray-900"><%= schedule.member.name %></div>
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap">
+                          <div class="text-sm text-gray-900"><%= schedule.start_date.strftime('%a, %d %b %Y') %></div>
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap">
+                          <div class="text-sm text-gray-900"><%= schedule.end_date.strftime('%a, %d %b %Y') %></div>
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                          <a href="<%= edit_on_call_unit_path(schedule.id) %>" class="text-indigo-600 hover:text-indigo-900">swap</a>
+                        </td>
+                      </tr>
+                    <% end %>
+                    <!-- More people... -->
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  <% else %>
+    <div class="flex flex-col">
+        <div class="relative bg-white">
+          <div class="max-w-7xl mx-auto px-4 sm:px-6">
+            <div class="flex justify-between items-center pb-6 md:justify-start md:space-x-10">
+              <span>There is no schedule.</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  <% end %>
+    <div class="flex flex-col">
+      <div class="relative bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6">
+          <div class="flex justify-between items-center py-6 md:justify-start md:space-x-10">
+            <%= form_for @on_call_period, url: {action: 'create'} do |form| %>
+              <%= form.button "Create a new schedule", type: :submit, class: 'bg-transparent hover:bg-indigo-600 text-indigo-700 font-semibold hover:text-white py-2 px-4 border border-indigo-600 hover:border-transparent rounded' %>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+

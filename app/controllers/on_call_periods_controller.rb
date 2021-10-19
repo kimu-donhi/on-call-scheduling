@@ -3,7 +3,10 @@
 class OnCallPeriodsController < ApplicationController
   def index
     @on_call_period = OnCallPeriod.new
+    @first_on_call_date ||= OnCallPeriod.first.start_date
+    @last_on_call_date ||= OnCallPeriod.last.end_date
     current_on_call_member
+    search_date
     on_call_schedules
   end
 
@@ -39,8 +42,8 @@ class OnCallPeriodsController < ApplicationController
 
   def on_call_schedules
     @schedules = OnCallUnit.where('start_date >= ? AND start_date <= ?',
-                                  search_date.beginning_of_month,
-                                  search_date.end_of_month).order(start_date: :asc)
+                                  @search_date.beginning_of_month,
+                                  @search_date.end_of_month).order(start_date: :asc)
   end
 
   def search_params
@@ -51,7 +54,7 @@ class OnCallPeriodsController < ApplicationController
     year = search_params.present? ? search_params['search_date(1i)'].to_i : Time.now.year
     month = search_params.present? ? search_params['search_date(2i)'].to_i : Time.now.month
 
-    DateTime.new(year, month, 1)
+    @search_date = DateTime.new(year, month, 1)
   end
 
   def members
