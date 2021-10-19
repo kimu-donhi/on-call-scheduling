@@ -31,7 +31,7 @@
     <div class="relative bg-white">
       <div class="max-w-7xl mx-auto px-4 sm:px-6">
         <div class="flex justify-between items-center py-6 md:justify-start md:space-x-10">
-          <span class="text-gray-500">The last on-call date is <%= @last_on_call_date.strftime('%a, %d %b %Y') %>.</span>
+          <span class="text-gray-500">The last on-call date is <%= @last_on_call_date.strftime('%a, %d %B %Y') %>.</span>
         </div>
       </div>
     </div>
@@ -77,7 +77,6 @@
                       </td>
                     </tr>
                   <% end %>
-                  <!-- More people... -->
                 </tbody>
               </table>
             </div>
