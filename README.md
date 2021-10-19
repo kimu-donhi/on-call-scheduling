@@ -154,4 +154,5 @@ Belows are not implemented or applied yet.
 - Authentication and authorization.
 - Configure period unit time.
 - Add a new member.
+- Notify today's on-call.
 - Enhanced UX/UI.
