@@ -2,6 +2,8 @@
 
 An application for scheduling on-call rotations for the engineering team.
 
+![On-call Scheduling](./public/readme/index-search.png)
+
 ## View Demo
 
 To access the demo site, click the link below.
@@ -12,11 +14,42 @@ https://on-call-scheduling.herokuapp.com/
 
 On-call Scheduling has the below features.
 
-- Create a new schedule.
-  - The default period unit is 1 week (7 days).
-- Show who is the person currently on-call.
-- Search who are/were and they are/were on-call for a given month.
-- Swap one's on-call schedule with another person (only within the whole period).
+### Create a new schedule
+
+1. Click 'Create a new schedule'
+
+![On-call Scheduling](./public/readme/index-with-no-schedule.png)
+
+2. It shows index page with success alert and schedules.
+
+![On-call Scheduling](./public/readme/index-create-a-new-schedule.png)
+
+ ※ The default period unit is 1 week (7 days).
+
+### Show who is the person currently on-call
+
+Check '`Someone's name` is Today's on-call.' from index page.
+
+![On-call Scheduling](./public/readme/index-create-a-new-schedule.png)
+## Search who are/were and they are/were on-call for a given month
+
+1. Select year and month and Click 'Search schedule' button.
+2. It shows index page with the schedules for a given month.
+
+![On-call Scheduling](./public/readme/index-search.png)
+
+### Swap one's on-call schedule with another person
+
+1. Click 'swap' link of a schedule from the table.
+2. Select schedule to swap and Click 'Swap' button.
+
+![On-call Scheduling](./public/readme/swap-page.png)
+
+3. It shows index page with changed schedule and success notice.
+
+![On-call Scheduling](./public/readme/swapped-successfully.png)
+
+※ You can swap the schedule only within the period.
 
 ## Getting Started
 
